@@ -55,6 +55,20 @@ public class MainFrame extends JFrame implements ActionListener {
 		// Create Demo menu structure
 		JMenu demoMenu = new JMenu("Demos");
 		JMenu sortMenu = new JMenu("Sorting Algorithms");
+		JCheckBox chkBubble = new JCheckBox("Bubble Sort");
+		JCheckBox chkInsertion = new JCheckBox("Insertion Sort");
+		JCheckBox chkSelection = new JCheckBox("Selection Sort");
+		JCheckBox chkMerge = new JCheckBox("Merge Sort");
+		JCheckBox chkQuick = new JCheckBox("Quick Sort");
+		JCheckBox chkHeap = new JCheckBox("Heap Sort");
+		JCheckBox chkShell = new JCheckBox("Shell Sort");
+		sortMenu.add(chkBubble);
+		sortMenu.add(chkInsertion);
+		sortMenu.add(chkSelection);
+		sortMenu.add(chkMerge);
+		sortMenu.add(chkQuick);
+		sortMenu.add(chkHeap);
+		sortMenu.add(chkShell);
 		demoMenu.add(sortMenu);
 		
 		// Create MultiTasking menu structure
