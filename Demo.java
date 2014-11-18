@@ -1,6 +1,6 @@
 import javax.swing.JApplet;
 
-public class Project extends JApplet {
+public class Demo extends JApplet {
 
 	public static String defaultString = "CS5405 Project";
 	
