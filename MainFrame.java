@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.Box;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -54,39 +55,39 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		// Create Demo menu structure
 		JMenu demoMenu = new JMenu("Demos");
-		JMenu sortMenu = new JMenu("Sorting Algorithms");
-		JCheckBox chkBubble = new JCheckBox("Bubble Sort");
-		JCheckBox chkInsertion = new JCheckBox("Insertion Sort");
-		JCheckBox chkSelection = new JCheckBox("Selection Sort");
-		JCheckBox chkMerge = new JCheckBox("Merge Sort");
-		JCheckBox chkQuick = new JCheckBox("Quick Sort");
-		JCheckBox chkHeap = new JCheckBox("Heap Sort");
-		JCheckBox chkShell = new JCheckBox("Shell Sort");
-		sortMenu.add(chkBubble);
-		sortMenu.add(chkInsertion);
-		sortMenu.add(chkSelection);
-		sortMenu.add(chkMerge);
-		sortMenu.add(chkQuick);
-		sortMenu.add(chkHeap);
-		sortMenu.add(chkShell);
-		demoMenu.add(sortMenu);
+		JMenuItem bubbleItem = new JMenuItem("Bubble Sort");
+		JMenuItem insertItem = new JMenuItem("Insertion Sort");
+		JMenuItem selectItem = new JMenuItem("Selection Sort");
+		JMenuItem mergeItem = new JMenuItem("Merge Sort");
+		JMenuItem quickItem = new JMenuItem("Quick Sort");
+		JMenuItem heapItem = new JMenuItem("Heap Sort");
+		JMenuItem shellItem = new JMenuItem("Shell Sort");
+		demoMenu.add(bubbleItem);
+		demoMenu.add(insertItem);
+		demoMenu.add(selectItem);
+		demoMenu.add(mergeItem);
+		demoMenu.add(quickItem);
+		demoMenu.add(heapItem);
+		demoMenu.add(shellItem);
 		
 		// Create MultiTasking menu structure
 		JMenu multiMenu = new JMenu("MultiTasking");
-		JMenu selectMenu = new JMenu("Select Algorithms");
-		multiMenu.add(selectMenu);
+		JCheckBoxMenuItem bubbleChk = new JCheckBoxMenuItem("Bubble Sort");
+		JCheckBoxMenuItem insertChk = new JCheckBoxMenuItem("Insertion Sort");
+		JCheckBoxMenuItem selectChk = new JCheckBoxMenuItem("Selection Sort");
+		JCheckBoxMenuItem mergeChk = new JCheckBoxMenuItem("Merge Sort");
+		JCheckBoxMenuItem quickChk = new JCheckBoxMenuItem("Quick Sort");
+		JCheckBoxMenuItem heapChk = new JCheckBoxMenuItem("Heap Sort");
+		JCheckBoxMenuItem shellChk = new JCheckBoxMenuItem("Shell Sort");
+		multiMenu.add(bubbleChk);
+		multiMenu.add(insertChk);
+		multiMenu.add(selectChk);
+		multiMenu.add(mergeChk);
+		multiMenu.add(quickChk);
+		multiMenu.add(heapChk);
+		multiMenu.add(shellChk);
 		
-		// Inline Action listener example
-		/*
-		someMenuItem.addActionListener(
-			new ActionListener(){
-				public void actionPerformed(ActionEvent ae) {
-					someInternalPane.setVisible(true); }
-			} );
-		*/
-
-		// Disabled menu choice (if un-implemented) example
-		// someMenuItem.setEnabled(false);
+		// NEED TO REGISTER ITEM ACTION LISTENERS
 		
 		// Add menu components to the Menu Bar
 		menu.add(aboutMenu);
