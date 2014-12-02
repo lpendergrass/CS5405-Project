@@ -24,7 +24,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		// Initialize Frame
 		super(title);
 		setSize(defaultWidth, defaultHeight);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// Create Desktop Pane
 		desktop = new JDesktopPane();
