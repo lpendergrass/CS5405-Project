@@ -38,10 +38,17 @@ public class graphPane extends JPanel {
 	    	array.add(rand.nextInt(maxVal));
 	}
 	
-	// Use swap function for sorting, will implement sleep time later
 	public void swap( int x, int y ){
 		Collections.swap(array, x, y);
 		repaint();
+	}
+	
+	public int get( int x ){ 
+		return array.get(x);
+	}
+	
+	public int length(){
+		return arrayLen;
 	}
 	
 	public void paint(Graphics g){
