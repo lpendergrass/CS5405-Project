@@ -80,7 +80,8 @@ public class graphPane extends JPanel {
 			// Draw bar i's border
 			g.setColor(Color.black);
 			g.drawRect( i * barWidth, getHeight() - barHeight - 2, barWidth, barHeight);
+		}
+		
 	}
-}
 	
 }
