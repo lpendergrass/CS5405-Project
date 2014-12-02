@@ -13,6 +13,7 @@ public class graphPane extends JPanel {
 	// Initial Array Parameters
 	int arrayLen = 20;
 	int maxVal = 100;
+	int sleepTime = 100;
 	
 	// Random number generator
 	Random rand = new Random();
