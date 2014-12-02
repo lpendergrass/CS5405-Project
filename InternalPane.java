@@ -1,6 +1,14 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Hashtable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,7 +19,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 
-public class InternalPane extends JInternalFrame implements ChangeListener {
+public class InternalPane extends JInternalFrame implements Runnable, ChangeListener {
 	
 	// Default Sizing
 	protected int startPos = 20;
@@ -21,11 +29,18 @@ public class InternalPane extends JInternalFrame implements ChangeListener {
 	// Speed Settings
 	int speedMin = 100;
 	int speedMax = 1000;
-	int speedInit = 500;
+	int speedInit = 550;
+	int sleepTime = 550;
 
 	JSlider speedCtrl;
 	graphPane graph;
+	JPanel ctrlPanel;
+	
+	boolean stopped = false;
+	boolean resumed = false;
 
+	ExecutorService executor;
+	
 	// Constructor
 	public InternalPane(String title){
 		super(title, true, true, true, true);
@@ -40,6 +55,7 @@ public class InternalPane extends JInternalFrame implements ChangeListener {
 		
 		// Add speed slider
 		speedCtrl = new JSlider(speedMin, speedMax, speedInit);
+		speedCtrl.addChangeListener(this);
 		speedCtrl.setMajorTickSpacing(150);
 		speedCtrl.setPaintTicks(true);
 		speedCtrl.setSnapToTicks(true);
@@ -55,10 +71,11 @@ public class InternalPane extends JInternalFrame implements ChangeListener {
 		speedCtrl.setLabelTable(speedLabels);
 		speedCtrl.setPaintLabels(true);
 		
+		createControlPanel();
 		
 		// Controls and Spacers
 		add( speedCtrl, BorderLayout.NORTH);
-		add( new ctrlPanel(), BorderLayout.SOUTH);
+		add( ctrlPanel, BorderLayout.SOUTH);
 		add( new JPanel(), BorderLayout.EAST);
 		add( new JPanel(), BorderLayout.WEST);
 		
@@ -67,12 +84,84 @@ public class InternalPane extends JInternalFrame implements ChangeListener {
 		// Bring to front
 		try { setSelected(true); }
 			catch(Exception e) {/*unused handler*/}
-
+		
+		executor = Executors.newFixedThreadPool(1);	
+		executor.execute(this);
+	}
+	
+	// Threadable task
+	public void run() {
+		while(!stopped){
+			try {
+				
+				// Strange race condition if this line removed
+				Thread.sleep(1);
+				
+				if( resumed ) {
+					
+					// sort stuff
+					
+					// Sleep based on speed setting
+					Thread.sleep(sleepTime);
+				}	    
+			}
+			
+			catch (InterruptedException ex){}
+		}
 	}
 
-	@Override
-	public void stateChanged(ChangeEvent arg0) {
-		// TODO Auto-generated method stub
+	private void createControlPanel() {
 		
+		ctrlPanel = new JPanel();
+		
+		JButton btnStop, btnStart, btnPause;
+		Icon icnStop, icnStart, icnPause;
+		
+		icnStop = new ImageIcon(getClass().getResource("/images/icnStop.png"));
+		icnStart = new ImageIcon(getClass().getResource("/images/icnStart.png"));
+		icnPause = new ImageIcon(getClass().getResource("/images/icnPause.png"));
+		
+		btnStop = new JButton(icnStop);
+		btnStart = new JButton(icnStart);
+		btnPause = new JButton(icnPause);
+		
+		ctrlPanel.add(btnStop);
+		ctrlPanel.add(new JPanel());
+		ctrlPanel.add(btnStart);
+		ctrlPanel.add(new JPanel());
+		ctrlPanel.add(btnPause);
+		
+		btnStop.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent ae) {
+				
+				// Close Internal Frame
+				try {
+					resumed = false;
+					stopped = true;
+					executor.shutdownNow();
+					executor.awaitTermination(0, TimeUnit.SECONDS);
+					setClosed(true);
+				}
+				
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} );
+		
+		btnStart.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent ae) {
+				resumed = true;	}
+		} );
+		
+		btnPause.addActionListener( new ActionListener(){
+			public void actionPerformed(ActionEvent ae) {
+				resumed = false; }
+		} );
+	}
+	
+	// Speed slider handler
+	public void stateChanged(ChangeEvent e) {
+		sleepTime = speedCtrl.getValue();
 	}
 }
