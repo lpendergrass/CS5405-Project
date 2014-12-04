@@ -39,7 +39,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	/**
 	 *  Creates a Menu Bar for navigating functionality
 	 */
-	private JMenuBar createMenu(){
+	public JMenuBar createMenu(){
 		
 		// Create Initial MenuBar
 		JMenuBar menu = new JMenuBar();
@@ -56,6 +56,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		// Create Demo menu structure
 		JMenu demoMenu = new JMenu("Demos");
 		JMenuItem bubbleItem = new JMenuItem("Bubble Sort");
+		bubbleItem.addActionListener(this);
 		JMenuItem insertItem = new JMenuItem("Insertion Sort");
 		JMenuItem selectItem = new JMenuItem("Selection Sort");
 		JMenuItem mergeItem = new JMenuItem("Merge Sort");
@@ -108,9 +109,12 @@ public class MainFrame extends JFrame implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent event) {
 		
-		if (event.getSource() == "")
+		if (event.getSource() == "bubbleItem")
+			{new BubbleSort();
+			}
+			
 			/* Do Some Action */;
-		else if (event.getSource() == "")
+	//	else if (event.getSource() == "")
 			/* Do Some Other Action */;
 	}
 	

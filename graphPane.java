@@ -3,12 +3,22 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.Random;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.awt.Graphics2D;
+import java.awt.Color;
+import java.awt.Container;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
 
-public class graphPane extends JPanel {
+public class graphPane extends JPanel implements Runnable {
 
 	// Initial Array Parameters
 	int arrayLen = 20;
@@ -44,6 +54,7 @@ public class graphPane extends JPanel {
 		for(int i = 0; i < arrayLen; i++)
 	    	array.add(rand.nextInt(maxVal));
 	}
+
 	
 	// Swaps items at the specified indices
 	public void swap( int x, int y ){
@@ -62,8 +73,12 @@ public class graphPane extends JPanel {
 	}
 	
 	// Paints the arrays values as a bar graph
-	public void paint(Graphics g){
-		super.paint(g);
+	//public void paint(Graphics g){
+	//	super.paint(g);
+	
+	
+	public void draw(int[] sort, int k){
+		Graphics g2 = this.getGraphics();
 		
 		int barHeight;
 		int barWidth = getWidth() / arrayLen;
@@ -75,14 +90,34 @@ public class graphPane extends JPanel {
 			barHeight = (int)(array.get(i) * heightRatio);
 			
 			// Fill bar i's background
-			g.setColor(Color.green);
-			g.fillRect( i * barWidth, getHeight() - barHeight - 2, barWidth, barHeight);
+			g2.setColor(Color.green);
+			g2.fillRect( i * barWidth, getHeight() - barHeight - 2, barWidth, barHeight);
 			
 			// Draw bar i's border
-			g.setColor(Color.black);
-			g.drawRect( i * barWidth, getHeight() - barHeight - 2, barWidth, barHeight);
+			g2.setColor(Color.black);
+			g2.drawRect( i * barWidth, getHeight() - barHeight - 2, barWidth, barHeight);
 		}
 		
-	}
-	
+	}	
+
+JPanel panel;
+@Override
+public void paintComponent(Graphics g) {
+	super.paintComponent(g);
 }
+
+@Override
+public void run()
+{
+	try {
+		Thread.sleep(1000);
+	}
+	catch(InterruptedException e){
+		e.printStackTrace();
+	}
+}
+
+}
+	
+
+
